@@ -33,4 +33,61 @@ def BackACW(x):  # action 12
     BackCW(x)
     BackCW(x)
 
+def make_move(x, move, reverse):
+    # move number
+    # reverse if 0 original move if 1 reverse of input move
+
+    if reverse == 1:
+        if move % 2 == 0:
+            move = move - 1
+        else:
+            move = move + 1
+    if move == 1:
+        FrontCW(x)
+        return "FrontCW"
+
+    if move == 2:
+        FrontACW(x)
+        return "FrontACW"
+
+    if move == 3:
+        UpCW(x)
+        return "UpCW"
+
+    if move == 4:
+        UpACW(x)
+        return "UpACW"
+
+    if move == 5:
+        DownCW(x)
+        return "DownCW"
+
+    if move == 6:
+        DownACW(x)
+        return "DownACW"
+
+    if move == 7:
+        LeftCW(x)
+        return "LeftCW"
+
+    if move == 8:
+        LeftACW(x)
+        return "LeftACW"
+
+    if move == 9:
+        RightCW(x)
+        return "RightCW"
+
+    if move == 10:
+        RightACW(x)
+        return "RightACW"
+
+    if move == 11:
+        BackCW(x)
+        return "BackCW"
+
+    if move == 12:
+        BackACW(x)
+        return "BackACW"
+
 
