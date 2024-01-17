@@ -63,7 +63,7 @@ def idfs(start):
 
         while len(frontier) != 0:
             curr = frontier.pop()
-             if goal_reached(curr.cube):
+            if goal_reached(curr.cube):
                 print('Goal Height:', curr.cost)
                 print('Branching Factor:', sum(branching_factors)/len(branching_factors))
                 # while curr is not None:
