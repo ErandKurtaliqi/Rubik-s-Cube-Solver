@@ -3,23 +3,44 @@ import numpy as np
 from datetime import datetime
 import time
 
+
+array = np.array([
+    [[0, 0, 2], [1, 0, 2], [2, 0, 2]],
+    [[0, 0, 1], [1, 0, 1], [2, 0, 1]],
+    [[0, 0, 0], [1, 0, 0], [2, 0, 0]],
+    [[0, 0, 2], [0, 1, 2], [0, 2, 2]],
+    [[0, 0, 1], [0, 1, 1], [0, 2, 1]],
+    [[0, 0, 0], [0, 1, 0], [0, 2, 0]],
+    [[0, 0, 0], [1, 0, 0], [2, 0, 0]],
+    [[0, 1, 0], [1, 1, 0], [2, 1, 0]],
+    [[0, 2, 0], [1, 2, 0], [2, 2, 0]],
+    [[2, 0, 0], [2, 0, 1], [2, 0, 2]],
+    [[2, 1, 0], [2, 1, 1], [2, 1, 2]],
+    [[2, 2, 0], [2, 2, 1], [2, 2, 2]],
+    [[2, 0, 2], [1, 0, 2], [0, 0, 2]],
+    [[2, 1, 2], [1, 1, 2], [0, 1, 2]],
+    [[2, 2, 2], [1, 2, 2], [0, 2, 2]],
+    [[0, 2, 0], [1, 2, 0], [2, 2, 0]],
+    [[0, 2, 1], [1, 2, 1], [2, 2, 1]],
+    [[0, 2, 2], [1, 2, 2], [2, 2, 2]],
+])
+
+
 class State:
     cube = None
-    cost = 0
+    g = 0
+    h = 0
     parent = None
     move = None
 
 
 # checks if goal reached. if reached writes goal state in output.txt
-def goal_reached(cube):
-    for ref in [0, 3, 6, 9, 12, 15]:
-        first = cube[ref, 0]
-        for i in range(3):
-            for j in range(3):
-                if first != cube[ref + i, j]:
-                    return False
+def goal_reached(curr):
+    if curr.h != 0:
+        return False
 
     # goal reached
+    cube = curr.cube
     file = open('output.txt', 'w')
     file.write("              " + str(cube[0, 0:3]) + '\n')
     file.write("              " + str(cube[1, 0:3]) + '\n')
@@ -44,7 +65,7 @@ def contains1(child, parent):
     return False
 
 
-# checks if  child state is present in frontier
+# checks if frontier contains child
 def contains2(child, frontier):
     for curr in frontier:
         if np.array_equal(curr.cube, child): return True
@@ -52,14 +73,27 @@ def contains2(child, frontier):
     return False
 
 
-def idfs(start):
-    cost_limit = 1
+def ida(start):
+    start.h = corner_edge_sum_max(start.cube)
+    cost_limit = start.h
     nodes = 0
     frontier = list()
     branching_factors = list()
 
     while True:
+        minimum = None
         frontier.append(start)
 
         while len(frontier) != 0:
             curr = frontier.pop()
+
+            if goal_reached(curr):
+                print('Goal Height:', curr.g)
+                print('Branching Factor:', sum(branching_factors)/len(branching_factors))
+                # while curr is not None:
+                #    if curr.move is not None:
+                #        print(curr.move)
+                #    curr = curr.parent
+                print("Nodes Generated:", nodes)
+
+                return
