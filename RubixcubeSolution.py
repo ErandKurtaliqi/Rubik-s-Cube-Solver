@@ -95,9 +95,9 @@ def ida(start):
                 #        print(curr.move)
                 #    curr = curr.parent
                 print("Nodes Generated:", nodes)
-
                 return
- b = 0
+
+            b = 0
             nodes = nodes + 12
             for i in range(12):
                 new = State()
