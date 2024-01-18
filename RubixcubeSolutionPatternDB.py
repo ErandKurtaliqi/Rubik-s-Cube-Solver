@@ -125,4 +125,34 @@ def ida(start):
 def heuristic(cube):
     a = db[get_corner_string(cube)]
     return a
-##################################################################3
+
+
+########################################################################################################################
+curr = State()
+curr.cube = np.array(xInitial)
+handle = open('input.txt')
+indexes = [0, 1, 2, 3, 6, 9, 12, 4, 7, 10, 13, 5, 8, 11, 14, 15, 16, 17]
+index = 0
+for line in handle:
+    line = line.replace(' ', '')
+    for row in line.split('['):
+        if len(row) != 0:
+            i = indexes[index]
+            curr.cube[i, 0] = row[1]
+            curr.cube[i, 1] = row[4]
+            curr.cube[i, 2] = row[7]
+            index = index + 1
+
+get_db()
+
+time.ctime()
+fmt = '%H:%M:%S'
+start = time.strftime(fmt)
+
+print(heuristic(xInitial))
+
+ida(curr)
+
+time.ctime()
+end = time.strftime(fmt)
+print("Time taken(sec):", datetime.strptime(end, fmt) - datetime.strptime(start, fmt))
